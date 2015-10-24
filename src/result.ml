@@ -6,7 +6,8 @@ module type S =
     val return: 'ok -> ('ok, 'err) t
     val all : ('ok, 'err) t list -> ('ok list, 'err) t
     val both : ('a, 'err) t -> ('b, 'err) t -> ('a * 'b, 'err) t
-
+    val ok : ('a, 'err) t -> 'a option
+    val error : ('a, 'err) t -> 'err option
     module Monad_infix :
       sig
         val (>>|) : ('ok, 'err) t -> ('ok -> 'res) -> ('res, 'err) t
