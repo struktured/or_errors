@@ -1,6 +1,6 @@
 module type S =
   sig
-    type ('ok, 'err) t = Ok of 'ok | Error of 'err 
+    type ('ok, 'err) t
     val map : ('ok -> 'res) -> ('ok, 'err) t -> ('res, 'err) t
     val bind : ('ok -> ('res, 'err) t) -> ('ok, 'err) t -> ('res, 'err) t
     val return: 'ok -> ('ok, 'err) t
