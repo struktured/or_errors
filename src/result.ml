@@ -1,18 +1,22 @@
 module type S =
+sig
+  type ('a, 'b) t
+  val ( >>= ) : ('a, 'd) t -> ('a -> ('b, 'd) t) -> ('b, 'd) t
+  val (>|=) : ('a, 'd) t -> ('a -> 'b) ->  ('b, 'd) t
+  val ( >>| ) : ('a, 'd) t -> ('a -> 'b) -> ('b, 'd) t
+  module Monad_infix :
   sig
-    type ('ok, 'err) t
-    val map : ('ok -> 'res) -> ('ok, 'err) t -> ('res, 'err) t
-    val bind : ('ok -> ('res, 'err) t) -> ('ok, 'err) t -> ('res, 'err) t
-    val return: 'ok -> ('ok, 'err) t
-    val all : ('ok, 'err) t list -> ('ok list, 'err) t
-    val both : ('a, 'err) t -> ('b, 'err) t -> ('a * 'b, 'err) t
-    val ok : ('a, 'err) t -> 'a option
-    val error : ('a, 'err) t -> 'err option
-    module Monad_infix :
-      sig
-        val (>>|) : ('ok, 'err) t -> ('ok -> 'res) -> ('res, 'err) t
-        val (>|=) : ('ok, 'err) t -> ('ok -> 'res) ->  ('res, 'err) t
-        val (>>=) : ('ok, 'err) t -> ('ok -> ('res, 'err) t) -> ('res, 'err) t
-      end
+    val (>>|) : ('a, 'd) t -> ('a -> 'b) -> ('b, 'err) t
+    val (>|=) : ('a, 'd) t -> ('a -> 'b) ->  ('b, 'err) t
+    val (>>=) : ('a, 'd) t -> ('a -> ('b, 'd) t) -> ('b, 'd) t
+  end
+  val bind : ('a, 'd) t -> ('a -> ('b, 'd) t) -> ('b, 'd) t
+  val return : 'a -> ('a, 'b) t
+  val map : ('a, 'd) t -> f:('a -> 'b) -> ('b, 'd) t
+  val join : (('a, 'd) t, 'd) t -> ('a, 'd) t
+  val ignore : ('a, 'd) t -> (unit, 'd) t
+  val all : ('a, 'd) t list -> ('a list, 'd) t
+  val both : ('a, 'err) t -> ('b, 'err) t -> (('a * 'b), 'err) t
+  val all_ignore : (unit, 'd) t list -> (unit, 'd) t
+  val map_error : ('ok, 'error1) t -> f:('error1 -> 'error2) -> ('ok, 'error2) t
 end
-
