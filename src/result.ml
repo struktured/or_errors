@@ -6,8 +6,8 @@ sig
   val ( >>| ) : ('a, 'd) t -> ('a -> 'b) -> ('b, 'd) t
   module Monad_infix :
   sig
-    val (>>|) : ('a, 'd) t -> ('a -> 'b) -> ('b, 'err) t
-    val (>|=) : ('a, 'd) t -> ('a -> 'b) ->  ('b, 'err) t
+    val (>>|) : ('a, 'd) t -> ('a -> 'b) -> ('b, 'd) t
+    val (>|=) : ('a, 'd) t -> ('a -> 'b) ->  ('b, 'd) t
     val (>>=) : ('a, 'd) t -> ('a -> ('b, 'd) t) -> ('b, 'd) t
   end
   val bind : ('a, 'd) t -> ('a -> ('b, 'd) t) -> ('b, 'd) t
