@@ -4,7 +4,6 @@ sig
   module Result : Result.S
   type 'a t
   include Monad.S with type 'a t := 'a t
-  val of_result : ('a, Error.t) Result.t -> 'a t
 end
 
 module Of_result(Result:Result.S)(Error:Error.S) :
