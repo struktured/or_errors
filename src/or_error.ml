@@ -2,7 +2,8 @@ module type S =
 sig
   module Error : Error.S
   module Result : Result.S
-  include Monad.S with type 'a t = ('a, Error.t) Result.t
+  type 'a t
+  include Monad.S with type 'a t := 'a t
   val of_result : ('a, Error.t) Result.t -> 'a t
 end
 
@@ -27,4 +28,3 @@ module Of_result(Result:Result.S)(Error:Error.S) :
       let of_result t = t
   end
 
-module Create(Or_error:S)(Error:Error.S) = Of_result(Or_error.Result)(Error)
