@@ -1,2 +1,5 @@
-Abstraction over Or_error, Result, and Monad signatures with a Jane Street style syntax.
+Jane Street Style Or_error, Result, and Monad signatures.
+
+This library allows a developer to write generic libraries
+over monadic frameworks independent of their implementations.
 
