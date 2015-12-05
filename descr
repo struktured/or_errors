@@ -1,0 +1,2 @@
+Abstraction over Or_error, Result, and Monad signatures with a Jane Street style syntax.
+
