@@ -1,7 +1,8 @@
 # OASIS_START
-# DO NOT EDIT (digest: f1ce5e458f11e3d5571c10b9d6415c5b)
+# DO NOT EDIT (digest: 8da685a537cba221ca48f10b6f7f6946)
 version = "0.1"
 description = "Ocaml Monad, Error, Result, And Or_error Signatures"
+requires = "ppx_deriving.show"
 archive(byte) = "or_errors.cma"
 archive(byte, plugin) = "or_errors.cma"
 archive(native) = "or_errors.cmxa"

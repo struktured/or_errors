@@ -18,4 +18,7 @@ module type S =
     val all : 'a t list -> 'a list t
     val all_ignore : unit t list -> unit t
     val both : 'a t -> 'b t -> ('a * 'b) t
+    val show : (Format.formatter -> 'a -> unit) -> 'a t -> string t
+    val pp : (Format.formatter -> 'a -> unit) ->
+      Format.formatter -> 'a t -> unit t
 end
