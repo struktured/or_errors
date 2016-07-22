@@ -7,15 +7,26 @@ sig
   val fail : Error.t -> 'a t
 end
 
-module Of_result
-    (Result:Result.S)
-    (Error:Error.S)
-    (Fail: sig type 'a t = ('a, Error.t) Result.t val fail : Error.t -> 'a t end) :
+module Showable =
+struct
+  module type OR_ERROR = S
+  module type S =
+  sig
+    module Result : Result.Showable.S
+    include OR_ERROR with module Result := Result
+  end
+  module Make
+    (Result : Result.Showable.S)
+    (Error : Error.S)
+    (Fail: sig
+       type 'a t = ('a, Error.t) Result.t
+       val fail : Error.t -> 'a t end) :
     S with
       module Result = Result and
-      module Error = Error =
+      module Error = Error and
+      type 'a t = ('a, Error.t) Result.t =
   struct
-    type 'a t = ('a, Error.t) Result.t
+      type 'a t = ('a, Error.t) Result.t
       module Error = Error
       module Result = Result
       let bind = Result.bind
@@ -30,8 +41,11 @@ module Of_result
       module Monad_infix = Result.Monad_infix
       include Monad_infix
       let of_result t = t
+
       let pp (a_formatter:Format.formatter -> 'a -> unit) formatter =
         map ~f:(fun a -> a_formatter formatter a)
-      let show a_f t = Format.flush_str_formatter() |> fun (_:string) ->
-                       pp a_f Format.str_formatter t |> map ~f:Format.flush_str_formatter
+      let show a_f t =
+        Format.flush_str_formatter() |> fun (_:string) ->
+       pp a_f Format.str_formatter t |> map ~f:Format.flush_str_formatter
   end
+end
