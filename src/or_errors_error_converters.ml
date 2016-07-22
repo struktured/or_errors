@@ -1,3 +1,4 @@
+module Error = Or_errors_error
 module type S =
 sig
   module Error_in : Error.S

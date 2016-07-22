@@ -1,9 +1,11 @@
+module Error = Or_errors_error
+module Result = Or_errors_result
 module type S =
 sig
   module Error : Error.S
   module Result : Result.S
   type 'a t
-  include Monad.S with type 'a t := 'a t
+  include Or_errors_monad.S with type 'a t := 'a t
   val fail : Error.t -> 'a t
 end
 
