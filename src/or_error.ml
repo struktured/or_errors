@@ -12,11 +12,11 @@ struct
   module type OR_ERROR = S
   module type S =
   sig
-    module Result : Result.SHOWABLE
+    module Result : Result.S
     include OR_ERROR with module Result := Result
   end
   module Make
-    (Result : Result.SHOWABLE)
+    (Result : Result.S)
     (Error : Error.S)
     (Fail: sig
        type 'a t = ('a, Error.t) Result.t
