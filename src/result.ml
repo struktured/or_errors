@@ -21,23 +21,25 @@ sig
   val map_error : ('ok, 'error1) t -> f:('error1 -> 'error2) -> ('ok, 'error2) t
 end
 
+module type RESULT = S
+
 module Showable =
 struct
-  module type RESULT = S
-  module type S = sig
-  include RESULT
-  val show :
+  module type S =
+  sig
+    type ('a, 'b) t
+    val show :
       (Format.formatter -> 'a -> unit) ->
       (Format.formatter -> 'b -> unit) ->
       ('a, 'b) t -> (string, string) t
-  val pp :
+    val pp :
       (Format.formatter -> 'a -> unit) ->
       (Format.formatter -> 'b -> unit) ->
       Format.formatter -> ('a, 'b) t ->
       (unit, unit) t
   end
 
-  module Make(Result: RESULT) : S with type ('a, 'b) t = ('a, 'b) Result.t =
+  module Make(Result: RESULT) : S with type ('a,'b) t = ('a,'b) Result.t =
   struct
     include Result
     let pp a_ft b_ft ft (t:('a,'b) t) : (unit,unit) t=
@@ -50,3 +52,6 @@ struct
       map_error ~f:Format.flush_str_formatter
   end
 end
+
+module type SHOWABLE = sig include S include Showable.S with type ('a,'b) t := ('a,'b) t end
+
