@@ -22,5 +22,5 @@ remove: [
 ]
 
 depends: [
-  "ocamlfind"
+  "ocamlbuild" {build} "ocamlfind"
 ]
