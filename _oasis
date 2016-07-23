@@ -12,7 +12,7 @@ Library "or_errors"
   Pack: false
   Build:              true
   Path:               src
-  Modules:            Or_errors_monad, Or_errors_result, Or_errors_error, Or_errors_or_error, Or_errors_error_converters
+  Modules:            Or_errors_monad, Or_errors_result, Or_errors_error, Or_errors_or_error, Or_errors_error_converters, Or_errors
   BuildDepends:       ppx_deriving.show
 
 AlphaFeatures : ocamlbuild_more_args
