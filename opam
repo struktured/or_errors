@@ -22,5 +22,5 @@ remove: [
 ]
 
 depends: [
-  "ocamlbuild" {build} "ocamlfind"
+  "ocamlbuild" {build} "ocamlfind" "ppx_deriving.show"
 ]
